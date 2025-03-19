@@ -11,11 +11,12 @@
     align-items: center;
     z-index: 1000;
 }
+
 .dialog {
-    background: #fff; /*fallback*/
-    background: var(--bg);
-    padding: .5em; /* legacy  */
-    padding: max(.5em, 1vw, 2vh);
+    background: #fff;
+    /*fallback*/
+    background: var(--bg1);
+    padding: max(0.5em, 1vw, 2vh);
     padding-top: 0;
     border-radius: 1em;
     position: relative;
@@ -26,6 +27,7 @@
     flex-direction: column;
     justify-content: center;
 }
+
 .dialog-icon {
     color: #fff;
     background-color: var(--color);
@@ -36,66 +38,88 @@
     text-align: center;
     border-radius: .8em 0;
 }
+
 .dialog-icon-text {
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .dialog-title {
     font-size: 120%;
-    font-weight: normal;
     margin: .3em 0;
-    padding: 0 0.5em; /* avoid reaching margins */
+    padding: 0 0.5em;
+    /* avoid reaching margins */
     min-height: 1.2em;
 }
-.dialog-closer ~ .dialog-title {
+
+.dialog-closer~.dialog-title {
     margin-right: 2em;
 }
-.dialog-type ~ .dialog-title {
+
+.dialog-type~.dialog-title {
     margin-left: 2em;
 }
-.dialog-icon ~ .dialog-title {
+
+.dialog-icon~.dialog-title {
     text-align: center;
 }
+
 .dialog-closer {
     border-radius: 0 0.8em;
     right: 0;
     padding: 0;
     background-color: #c88;
 }
-.dialog-icon ~ .dialog-content {
+
+.dialog-icon~.dialog-content {
     margin-top: 1em;
 }
+
 .dialog-type {
     left: 0;
     top: 0;
     overflow: hidden;
-    opacity: .7; /* render the idea that's not a button */
+    opacity: .7;
+    /* render the idea that's not a button */
 }
+
 .dialog-content {
     overflow: auto;
     max-height: calc(100vh - 4.5em);
 }
+
 .dialog-content p {
     white-space: pre-wrap;
     margin: .5em 0;
 }
+
 .dialog-confirm .dialog-content button {
     margin-top: 1em;
 }
+
 .dialog-alert-info {
     --color: #282
 }
+
 .dialog-alert-warning {
     --color: #c91
 }
+
 .dialog-alert-error {
     --color: #822;
 }
 
 @media (max-width: 42em) {
-    .dialog-icon { font-size: 120% }
-    .dialog-icon ~ .dialog-content { margin-top: 1.5em; } /* account for larger top icons */
+    .dialog-icon {
+        font-size: 120%
+    }
+
+    .dialog-icon~.dialog-content {
+        margin-top: 1.5em;
+    }
+
+    /* account for larger top icons */
 }
 
 .dialog-prompt label {

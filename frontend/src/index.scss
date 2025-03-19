@@ -1,65 +1,128 @@
 @import '../../shared/main';
 
 :root {
-    height: 100dvh; // workarounded chrome109-mobile's problem with sticky-bottom bar moving when scrolling
-
-    --bg: #fff;
-    --text: #555;
-    --text-high-contrast: #111;
-    --link: var(--button-bg);
-    --ghost-contrast: #8882;
-    --ghost-contrast-alt: #eee;
-    --faint-contrast: #ddd;
-    --mild-contrast: #aaa;
-    --good-contrast: #444;
-    --button-bg: #6080aa;
-    --button-text: #eaeaea;
+    height: 100dvh;
+    /* workarounded chrome109-mobile's problem with sticky-bottom bar moving when scrolling */
+    --bg1: hsla(59, 86%, 68%, 1);
+    --bg2: hsla(134, 36%, 53%, 1);
+    --ghost-contrast: rgba(255, 255, 255, 0.05);
+    /* New Accent Colors */
+    --accent-dark: #DEB602;
+    /* Gold/yellow for dark theme */
+    --accent-light: #F3C42B;
+    /* Brighter yellow for light theme */
+    --text: #444444;
+    /* Dark gray for light theme */
+    --ghost-contrast-alt: #f0f0f0;
+    /* Light background alternative */
+    --good-contrast: #000;
+    /* Black for light theme contrast */
+    --button-bg: var(--accent-light);
+    --button-text: #222;
+    --faint-contrast: #8884;
+    --mild-contrast: #8886;
     --focus-color: #468;
-    --separator: " – "; // fallback
-    --success: #7c7;
-    --warning: #cc7;
-    --error: #c77;
-    @supports (content: "" / "") {
-        --separator: " – " / ""; // skip for screen-reader
-    }
-    .highlightedText { color: #0006; text-shadow: 0 0 3px #0006; }
-    .theme-dark {
-        --bg: #000;
-        --text: #999;
-        --text-high-contrast: #eee;
-        --link: #8ac;
-        --ghost-contrast-alt: #181818;
-        --faint-contrast: #2d2d2d;
-        --good-contrast: #aaa;
-        --button-bg: #345;
-        --button-text: #999;
-        --success: #272;
-        --warning: #772;
-        --error: #a22;
+    --separator: " – ";
 
+    .highlightedText {
+        color: var(--accent-light);
+        text-shadow: 0 0 3px rgba(243, 196, 43, 0.3);
+    }
+
+    a {
+        color: var(--accent-light);
+    }
+
+    .dialog-closer {
+        background: color-mix(in srgb, var(--accent-light) 20%, #633);
+    }
+
+    .error-msg {
+        background-color: color-mix(in srgb, var(--accent-light) 10%, #633);
+    }
+
+    button.toggled {
+        color: var(--accent-light);
+    }
+
+    .theme-dark {
+        --bg1: hsla(191, 28%, 23%, 1);
+        --bg2: hsla(207, 41%, 27%, 1);
+        --text: #cccccc;
+        /* Brighter gray for better readability */
+        --ghost-contrast-alt: #222222;
+        /* Slightly lighter dark for depth */
+        --good-contrast: #fff;
+        /* Pure white for best contrast */
+        --button-bg: var(--accent-dark);
+        /* Use accent color for buttons */
+        --button-text: #222;
+        /* Dark text for accent-colored buttons */
         color-scheme: dark;
-        .highlightedText { color: #fff; text-shadow: 0 0 3px #fff; }
-        .dialog-closer { background: #633 }
+
+        .highlightedText {
+            color: var(--accent-dark);
+            text-shadow: 0 0 3px rgba(222, 182, 2, 0.4);
+        }
+
+        a {
+            color: var(--accent-dark);
+            transition: opacity 0.2s;
+        }
+
+        a:hover {
+            opacity: 0.8;
+        }
+
+        .dialog-closer {
+            background: color-mix(in srgb, var(--accent-dark) 20%, #633);
+        }
+
         .dialog-icon {
-            color: #ccc;
-            .icon { color: #aaa; }
+            color: color-mix(in srgb, var(--accent-dark) 30%, #ccc);
+
+            .icon {
+                color: color-mix(in srgb, var(--accent-dark) 20%, #aaa);
+            }
         }
-        .dialog-backdrop { background: #333b; }
-        .error-msg { color: #b88; background-color: #623; }
-        button.toggled, a.toggled { color: #eee;
-            text-shadow: 0 0 3px #fff;
+
+        .dialog-backdrop {
+            background: color-mix(in srgb, var(--bg1) 15%, #333b);
         }
+
+        .error-msg {
+            color: #ffb3b3;
+            background-color: color-mix(in srgb, var(--accent-dark) 10%, #633);
+        }
+
+        button.toggled {
+            color: var(--accent-dark);
+            border: 1px solid color-mix(in srgb, var(--accent-dark) 30%, currentColor);
+        }
+
+
     }
 }
+
 body {
-    background-color: var(--bg);
+    background: var(--bg1);
+    background: -moz-linear-gradient(90deg, var(--bg1) 0%, var(--bg2) 100%);
+    background: -webkit-linear-gradient(90deg, var(--bg1) 0%, var(--bg2) 100%);
+    background: linear-gradient(90deg, var(--bg1) 0%, var(--bg2) 100%);
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-body, button, select, input { font-size: 12pt; }
+
+body,
+button,
+select,
+input {
+    font-size: 12pt;
+}
+
 .list-wrapper {
     max-width: 54em;
     margin: auto;
@@ -67,40 +130,75 @@ body, button, select, input { font-size: 12pt; }
     display: flex;
     flex-direction: column;
 }
-body, input {
+
+body,
+input {
     color: var(--text);
 }
+
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-input:not([type=checkbox],[type=range]), select, textarea {
+
+input:not([type=checkbox], [type=range]),
+select,
+textarea {
     padding: 0.3em 0.4em;
     border-radius: 0.5em;
-    background: var(--bg);
+    background: var(--bg1);
     border-color: var(--mild-contrast);
     color: var(--good-contrast);
-    max-width: 100%; box-sizing: border-box; // avoid scrolling
+    max-width: 100%;
+    box-sizing: border-box; // avoid scrolling
     width: 100%;
 }
+
 input[type=range] {
     width: calc(100% - 1px); // chrome116 on android shows a scrollbar because of that 1px
 }
+
 input[type=checkbox] {
     transform: scale(1.7);
     accent-color: var(--button-bg);
 }
-textarea { font-size: 14pt }
+
+textarea {
+    font-size: 14pt
+}
+
 label input[type=checkbox] {
     margin-right: .8em;
 }
-select { text-align: center; } // it is surely cooler on the options dialog
 
-.hidden { display: none !important }
+select {
+    text-align: center;
+}
 
-[class^="fa-"]:before, [class*=" fa-"]:before { /* don't need extra margin on fontello icons */
+// it is surely cooler on the options dialog
+
+.hidden {
+    display: none !important
+}
+
+[class^="fa-"]:before,
+[class*=" fa-"]:before {
+    /* don't need extra margin on fontello icons */
     margin: 0;
 }
-img.file-icon { height: 1em; }
+
+.icon {
+    font-size: 1.2em;
+    height: 1.2em;
+    width: 1.4em; // give similar size to <img> icons
+
+    display: inline-block;
+    text-align: center; // same size for font icons
+}
+
+img.file-icon {
+    height: 1em;
+}
+
 .file-icon {
     background-size: contain;
     background-repeat: no-repeat;
@@ -108,59 +206,59 @@ img.file-icon { height: 1em; }
     vertical-align: text-bottom;
 }
 
-[role=button] .icon {
-    margin-right: 0.5em;
+.icon.mirror:before {
+    transform: scaleX(-1);
 }
-.icon.mirror:before { transform: scaleX(-1); }
+
 a {
     text-decoration: none;
-    color: var(--link);
+    color: var(--button-bg);
 }
+
 button {
     background-color: var(--button-bg);
     color: var(--button-text);
-    padding: .5em;
-    display: inline-flex; align-items: center; justify-content: center; // get closer results between chrome and safari
-    &:not(.before-sliding) { min-width: min-content; }
-    &.small { padding: 0 0.4em; height: 30px; }
-    .icon { margin: -.2em 0; }
-    .font-icon { vertical-align: middle; }
+    padding: 0.5em 1em;
     border: transparent;
     text-decoration: none;
     border-radius: 0.3em;
     vertical-align: middle;
     cursor: pointer;
-    &:hover { outline: 1px solid var(--mild-contrast); }
+
+    &:hover {
+        outline: 1px solid var(--mild-contrast);
+    }
+
     transition: background-color .5s;
+
     &[disabled] {
         background-color: var(--faint-contrast);
     }
 }
+
 button.toggled {
     color: #fff;
     text-shadow: 0 0 3px #fff;
 }
-button.success {
-    transition:  all .3s;
-    background-color: var(--success);
-    @extend .highlightedText;
-}
-a[role=button].success {
-    transition:  all .3s;
-    color: var(--success);
-    text-shadow: 0 0 3px var(--text-high-contrast);
-}
-a.toggled {
-    color: #223;
-    text-shadow: 0 0 5px #223;
-}
-button, .breadcrumb { /* consistent focus color */
+
+button,
+.breadcrumb {
+
+    /* consistent focus color */
     &:focus-visible {
         outline: 3px solid var(--focus-color);
     }
 }
-a>button { width: 100%; height: 100%;  } /* link buttons, fill parent space */
-input, select, ul a {
+
+a>button {
+    width: 100%;
+    height: 100%;
+}
+
+/* link buttons, fill parent space */
+input,
+select,
+ul a {
     &:focus-visible {
         border-radius: .3em;
         border-color: transparent;
@@ -169,9 +267,10 @@ input, select, ul a {
 }
 
 .icon-button {
-    padding: .1em;
-    font-size: 104%; height: 1.8em; // same height as text buttons (30px)
-    width: 2em;
+    font-size: 0.7em;
+    padding: 0.2em 0.4em;
+    margin-left: 0.4em;
+    vertical-align: bottom;
 }
 
 .error-msg {
@@ -179,15 +278,23 @@ input, select, ul a {
     color: #833;
     padding: .5em 1em;
 }
+
 .hide-back {
-    background-color: var(--bg);
+    background-color: var(--bg1);
 }
+
 header {
     @extend .hide-back;
-    position: sticky;
+    position: sticky; // Uncomment if you want it sticky
     top: 0;
-    padding: .2em .1em;
-    z-index: 3; // necessary to not be covered by checkboxes
+    padding: 1em 1.5em; // Increased padding for better spacing
+    z-index: 3; // Necessary to not be covered by checkboxes
+    background-color: rgba(255, 255, 255, 0.1); // Semi-transparent white background
+    backdrop-filter: blur(8px); // Adds a frosted glass effect
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); // Increased shadow for more elevation
+    border-radius: 12px; // Rounded edges
+    margin: 1em; // Add margin to prevent the header from touching the edges
+    border: 1px solid rgba(255, 255, 255, 0.1); // Optional: subtle border for separation
 }
 
 kbd {
@@ -214,6 +321,7 @@ kbd {
     overflow: hidden !important;
     transition: flex .5s;
 }
+
 .show-sliding {
     transition: flex .5s;
     overflow: clip;
@@ -221,19 +329,43 @@ kbd {
     white-space: nowrap;
 }
 
-.ani-working { animation:1s blink infinite }
+.ani-working {
+    animation: 1s blink infinite
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1
+    }
+
+    50% {
+        opacity: 0.2
+    }
+}
 
 @keyframes spin {
-    100% { transform: rotate(360deg); }
-}
-@keyframes fade-in {
-    0% {opacity: 0}
-    100% {opacity: 1}
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-.spinner, .icon.spinner:before {
+@keyframes fade-in {
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1
+    }
+}
+
+.spinner,
+.icon.spinner:before {
     animation: 1.5s spin infinite linear;
-    display: inline-flex; justify-content: center; align-items: center; width: min-content;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: min-content;
 }
 
 .breadcrumb {
@@ -241,146 +373,214 @@ kbd {
     line-height: 1.8em;
     border-radius: 0.7em;
     background-color: var(--button-bg);
-    color: var(--button-text);
+    color: var(--button-text) !important;
 
     border-top: 1px solid #666;
-    margin-right: -0.1em;
+    margin-right: 0.1em;
+
     &:nth-child(-n+3) .icon {
         padding: 0 0.2em;
-        height: 1em; // effective only on file-icon
     }
 }
-#folder-stats, #filter-bar>span {
+
+#folder-stats,
+#filter-bar>span {
     font-size: 90%;
 }
+
 #folder-stats {
     margin-left: .5em;
     line-height: 2em;
     float: right;
+
     .icon {
         margin-right: .3em;
     }
 }
+
 #filter {
     flex: 1;
     box-sizing: border-box;
 }
+
 #filter-bar {
     display: flex;
     align-items: center;
     gap: .8em;
     margin: 0.2em 0 0;
     padding: 2px 0 1px 3px;
-    height: 1.8em; /* necessary to animate displaying */
-    input[type=checkbox] { margin-top: .3em; }
-    span:empty { display:none } /* avoid flex-gap */
-}
-#login-options {
-    font-size: smaller;
+    height: 1.8em;
+
+    /* necessary to animate displaying */
     input[type=checkbox] {
-        transform: scale(1.5);
+        margin-top: .3em;
     }
+
+    span:empty {
+        display: none
+    }
+
+    /* avoid flex-gap */
 }
 
 ul.dir {
-    padding: 0;
-    margin: 0;
+    flex: 1;
+    padding: 1em; // Added padding for spacing
+    margin: 1em; // Added margin for separation
+    margin-top: 0;
     clear: both;
-    &>p { text-align: center; }
+    background-color: rgba(255, 255, 255, 0.1); // Semi-transparent background
+    backdrop-filter: blur(8px); // Frosted glass effect
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); // Increased shadow for elevation
+    border-radius: 12px; // Rounded edges
+    border: 1px solid rgba(255, 255, 255, 0.1); // Subtle border for definition
+
+    &>p {
+        text-align: center;
+    }
+
     li {
-        display: block;
+        display: flex; // Use flexbox to align children
+        align-items: center; // Center items vertically
+        justify-content: space-between; // Space out link-wrapper and entry-panel
         list-style-type: none;
-        padding: 0.3em 0.3em 0.4em;
-        border-bottom: 1px solid var(--faint-contrast);
-        &:nth-of-type(odd) { background-color: var(--ghost-contrast); }
+        padding: 0.1em 0.7em 0em 0.1em;
+        border-bottom: 3px solid var(--faint-contrast);
+        position: relative; // Ensure child elements can use absolute positioning
+        transition: background-color 0.2s ease; // Smooth hover transition
 
-        .container-folder { font-size: smaller }
-
-        input[type=checkbox] {
-            margin-right: 1em;
+        // border-radius: 8px;
+        &:nth-of-type(odd) {
+            background-color: var(--ghost-contrast);
         }
+
+        // Expand clickable area for link-wrapper
         .link-wrapper {
-            @media (hover: none) {
-                .popup-menu-button { display: none }
+            flex: 1; // Take up remaining space
+            // padding: 0.5em 0.3em; // Add padding to increase clickable area
+            // margin-right: 0.5em; // Add margin to separate from entry-panel
+            text-decoration: none; // Remove default underline
+            color: inherit; // Inherit text color
+
+            &:hover {
+                // background-color: rgba(255, 255, 255, 0.1); // Subtle hover effect
             }
-            @media (hover: hover) {
-                &:not(:hover):not(:focus,:focus-within) .popup-menu-button { opacity: .001; } // use opacity, as jaws is not setting :focus
-                &:hover { padding: 1em; margin: -1em; // add margin to avoid leaving the hover unintentionally. Using this on @media(hover:none) will result in some taps to be missed. It happened on a long folder with no spaces in the name to wrap.
-                    .popup-menu-button { z-index: 1} // without this, attempting to hover from the name to the menu-button will easily lose the :hover if a comment is present
-                }
-            }
+
             a {
+                display: flex; // Use flexbox for alignment
+                align-items: center; // Center items vertically
+                text-decoration: none; // Remove default underline
+                color: inherit; // Inherit text color
+                padding: 0.5em 0.3em; // Add padding to increase clickable area
+
                 &:last-of-type {
                     word-break: break-word;
-                    padding-right: .5em;
+                    padding-right: 0.3em;
                 }
+
                 .icon {
-                    margin-right: .5em;
+                    margin-right: 0.5em;
+                    vertical-align: text-bottom;
                     display: inline-block;
                     text-align: center;
                 }
-                img.icon, video.icon { // same alignment as font icons
-                    vertical-align: bottom;
-                    position: relative;
-                    top: 1px;
-                }
-                &:hover {
-                    text-decoration: underline;
-                }
             }
         }
+
+        // Hover effect for the entire list item
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1); // Subtle hover effect
+            border-radius: 8px;
+        }
+
+        // Entry panel styling
         .entry-panel {
-            float: right;
-            padding-top: 0.3em;
             display: flex;
             align-items: center;
-            .icon-button {
-                margin: -3px 0 -3px 0.4em;
-                font-size: 0.7em;
-                width: 2.4em;
+            padding-left: 0.5em; // Add padding to separate from link-wrapper
+
+            .file-menu-button {
+                @extend .icon-button;
+                margin: -3px 0 -3px 0.7em;
+                font-size: .8em;
+                padding: 0.4em 0.6em;
             }
+
             .entry-details {
                 font-size: 90%;
                 margin-left: 4px;
-                font-variant-numeric: tabular-nums; /* trick to get stuff aligned */
+                font-variant-numeric: tabular-nums;
 
                 .entry-size-unit {
-                    margin-left: .3em;
+                    margin-left: 0.3em;
                 }
             }
         }
 
-        &>div:last-of-type { clear:both }
+        &>div:last-of-type {
+            clear: both;
+        }
+
         &.page-separator {
-            margin-top: .7em;
+            margin-top: 0.7em;
             position: relative;
+
             &::before {
                 content: attr(label);
                 position: absolute;
                 top: -1.5em;
                 font-size: smaller;
                 margin-left: calc(50% - 1em);
-                opacity: .9;
+                opacity: 0.9;
+            }
+        }
+    }
+
+    li.file {
+
+        // Styles for link-wrapper with multiple <a> tags
+        .link-wrapper {
+            display: flex; // Use flexbox to align <a> tags horizontally
+            align-items: center; // Center <a> tags vertically
+            flex: 1; // Take up remaining space
+
+            a {
+                padding: 0.5em 0em;
+
+                &:first-child {
+                    padding-left: 0.3em;
+                }
+
+                &:last-child {
+                    flex: 2;
+                }
+
+
             }
         }
     }
 }
+
 .entry-comment {
     display: inline;
     white-space: pre-wrap;
     word-break: break-word;
-    margin-bottom: .5em; // affecting only the layout of the current-folder-comment
-    &::before, &::after {
+
+    &::before,
+    &::after {
         font-size: 1.5em;
         font-family: serif;
         line-height: 1px;
         position: relative;
     }
+
     &::before {
         content: "“";
+        margin-left: 0.5em;
         margin-right: 0.1em;
         top: 0.2em;
     }
+
     &::after {
         content: "„";
         top: -0.1em;
@@ -392,31 +592,41 @@ ul.dir {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+
     &>* {
         flex: 1;
         margin: 0.1em; // using margin instead of gap because of the 0-width element that would produce extra gap
-        &:first-child { margin-left: 0 }
-        &:last-child { margin-right: 0 }
+        margin-bottom: .3em;
+
+        &:first-child {
+            margin-left: 0
+        }
+
+        &:last-child {
+            margin-right: 0
+        }
     }
+
     button {
         padding: min(1vh, 0.5em) 0; // avoid wasting too much vertical space, and no need for horizontal padding as we are using flex to grow
     }
 }
+
 #searched {
     margin: .2em;
 }
+
 #user-panel {
-    display:flex;
+    display: flex;
     flex-direction: column;
     gap: 1em;
+
     a>button {
         width: 100%;
     }
 }
 
-ul { padding-left: 2em }
-
-button .icon + .label {
+button label {
     cursor: inherit;
     margin-left: .4em;
 }
@@ -425,21 +635,29 @@ button .icon + .label {
     font-size: 5em;
     animation: 1s fade-in;
 }
+
 .dialog-content {
-    padding: .2em; /* give space for focus outline */
+    padding: .2em;
+    /* give space for focus outline */
 }
+
 .dialog-alert .dialog-content {
     text-align: center;
-    p { text-align: left; display: inline-block; }
-    ul { text-align: left; } // bullet points should be aligned
+
+    p {
+        text-align: left;
+        display: inline-block;
+    }
 }
 
 .dialog {
     min-width: 11em;
     --color: var(--button-bg);
 }
+
 .dialog-icon .icon {
-    margin-left: -1px; font-size:95%;
+    margin-left: -1px;
+    font-size: 95%;
     margin-top: 0.4em; // useful for and affecting only img icons
     border-radius: 0.6em 0;
 }
@@ -449,10 +667,17 @@ button .icon + .label {
     bottom: 0;
     display: flex;
     gap: .1em;
-    background-color: var(--bg);
+    background-color: var(--bg1);
     padding: 0 0.2em 0.2em;
-    &>button { z-index: 1; }
-    button { box-shadow: 0 0 .3em .3em #0003; }
+
+    &>button {
+        z-index: 1;
+    }
+
+    button {
+        box-shadow: 0 0 .3em .3em #0003;
+    }
+
     #paging-middle {
         padding: 0 0.5em;
         margin: 0 -0.3em;
@@ -461,79 +686,116 @@ button .icon + .label {
         flex: 1;
         overflow-x: auto;
     }
+
     #paging-middle>button {
         flex: 1;
-        min-width: unset;
-        padding-top: 0; padding-bottom: 0; /* reduce vertically in case a horizontal scrolling bar is needed */
+        padding-top: 0;
+        padding-bottom: 0;
+        /* reduce vertically in case a horizontal scrolling bar is needed */
     }
+
     button {
         background: var(--button-bg);
         text-align: center;
         white-space: nowrap;
-        padding: .5em; /* fit more buttons on screen */
+        padding: .5em;
+        /* fit more buttons on screen */
     }
 }
 
 .upload-toolbar {
     @extend .hide-back;
     position: sticky;
-    top: -4px; padding-top: 1px; // workaround: without this, the scrolling list behind is visible above (vertically, not z-index)
-    z-index: 3; // necessary to not be covered by icon-buttons
-    box-shadow: 0 0 .3em .3em var(--bg);
+    top: -4px;
 }
-.upload-hashing::before,
-.upload-progress::before { content: var(--separator); }
-.entry-size::after { content: var(--separator) }
+
+.upload-progress::before {
+    content: var(--separator);
+}
+
+.entry-size::after {
+    content: var(--separator)
+}
 
 .upload-progress {
     min-width: 4em;
     display: inline-block;
     margin-left: 0.5em;
 }
-.upload-progress-bar {
-    display: block;
-    width: 100%;
-}
+
 .upload-list {
     margin-top: .5em;
-    td:nth-child(1) { width: 0; }
-    td:nth-child(2) { text-align: right; width: 0; white-space: nowrap; padding-left: 0.5em; }
-    td:nth-child(3) { padding: .2em .5em; word-break: break-word; }
-}
-.nowrap { white-space: nowrap }
 
-.login-dialog {
+    td:nth-child(1) {
+        width: 0;
+    }
+
+    td:nth-child(2) {
+        text-align: right;
+        width: 0;
+        white-space: nowrap;
+        padding-left: 0.5em;
+    }
+
+    td:nth-child(3) {
+        padding: .2em .5em;
+        word-break: break-word;
+    }
+}
+
+.nowrap {
+    white-space: nowrap
+}
+
+.dialog-login {
     form {
         display: flex;
         flex-direction: column;
         gap: 1.2em;
     }
+
     label {
         display: block;
         margin-bottom: .5em;
         margin-left: .1em;
     }
 }
-#search-dialog form label:not(:first-of-type) { display: block; margin-top: 1em }
 
-form label+input { margin-top: .2em; }
-
-.miss-perm  { margin: 0 0.3em }
-
-.popup-menu-button {
-    font-size: .8em; padding: .2em .3em; position: absolute; opacity: .8; white-space: nowrap;
-    &:hover,&:focus { opacity: 1 }
-    .icon { margin-right: 0.1em; }
+.miss-perm {
+    margin: 0 0.3em
 }
 
-.file-dialog .dialog { min-width: 13em; } /* more room for title */
+.popup-menu-button {
+    font-size: .8em;
+    padding: .2em .3em;
+    position: absolute;
+    opacity: .8;
+    white-space: nowrap;
+
+    &:hover {
+        opacity: 1
+    }
+}
+
+.file-dialog .dialog {
+    min-width: 13em;
+}
+
+/* more room for title */
 .file-dialog-properties {
     word-break: break-word;
     line-height: 1.5em;
     margin: 0;
-    dt { font-weight: bold; }
-    dd { margin-left: 1.5em; }
+
+    dt {
+        font-weight: bold;
+    }
+
+    dd {
+        margin-left: 1.5em;
+    }
 }
+
 .file-menu {
     margin-top: 1em;
     padding-top: 1em;
@@ -541,59 +803,37 @@ form label+input { margin-top: .2em; }
 
     display: flex;
     flex-direction: column;
-    gap: .7em 1em;
+    gap: 1em;
+
     a {
         display: flex;
         align-items: flex-start;
+
         label {
-            cursor: pointer;
             margin-top: .1em;
-            small { display: block }
+
+            small {
+                display: block
+            }
         }
-        .icon { margin-right: 0.5em; }
-        &:hover { @extend .highlightedText }
+
+        .icon {
+            margin-right: 0.5em;
+        }
+
+        &:hover {
+            @extend .highlightedText
+        }
     }
 }
 
-.unauthorized { text-align: center }
-
-.toast-content {
-    a { color: var(--bg); text-decoration: underline; }
-    .horiz-sep { display: none }
-}
-
-#clipBar {
-    position: sticky; bottom: 0;
-    background: var(--bg);
-    box-shadow: 0 0 .3em .3em var(--bg);
-
-    display: flex; align-items: center; gap: 0.5em;
-    margin: 0 1px;
-}
-#clipboard-content {
-    text-align: left;
-    li:first-of-type { margin-top: .5em }
-}
-
-#focus-typing {
-    position: fixed;
-    top: 0;
-    right: 0;
-    background: var(--bg);
-    z-index: 3;
-    padding: .1em .5em;
-    border: 1px solid currentColor;
-    margin: -1px;
-}
-.focus-typing-mismatch {
-    color: var(--error);
+.unauthorized {
+    text-align: center
 }
 
 .tiles-mode {
     max-width: none;
-    @media (min-width: 42em) {
-        margin: 0 1em;
-    }
+    margin: 0 1em;
     --tile-size: 5;
     --name-lines: 3;
     --name-height: calc(4.7em + var(--tile-size) * .4em + 1.2em * var(--name-lines));
@@ -601,9 +841,85 @@ form label+input { margin-top: .2em; }
 
     ul.dir {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(var(--tile-width),1fr));
+        grid-template-columns: repeat(auto-fill, minmax(var(--tile-width), 1fr));
         grid-auto-rows: calc(var(--name-height) + 1.3em);
         gap: 0 20px;
+
+        li.file {
+            display: flex; // Use flexbox to align children
+            align-items: center; // Center items vertically
+            justify-content: space-between; // Space out link-wrapper and entry-panel
+            list-style-type: none;
+            padding: 0.3em 0.3em 0.4em;
+            border-bottom: 1px solid var(--faint-contrast);
+            position: relative; // Ensure child elements can use absolute positioning
+            transition: background-color 0.2s ease; // Smooth hover transition
+
+            &:nth-of-type(odd) {
+                background-color: var(--ghost-contrast);
+            }
+
+            // Styles for link-wrapper with multiple <a> tags
+            .link-wrapper {
+                display: flex; // Use flexbox to align <a> tags horizontally
+                align-items: center; // Center <a> tags vertically
+                flex: 1; // Take up remaining space
+                gap: 0.5em; // Add spacing between <a> tags
+                padding: 0.5em 0.3em; // Add padding to increase clickable area
+                margin-right: 0.5em; // Add margin to separate from entry-panel
+                text-decoration: none; // Remove default underline
+                color: inherit; // Inherit text color
+
+                a {
+                    display: flex; // Use flexbox for alignment
+                    align-items: center; // Center items vertically
+                    text-decoration: none; // Remove default underline
+                    color: inherit; // Inherit text color
+
+                    &:hover {
+                        text-decoration: underline; // Add underline on hover
+                    }
+
+                    .icon {
+                        margin-right: 0.5em;
+                        vertical-align: text-bottom;
+                        display: inline-block;
+                        text-align: center;
+                    }
+                }
+            }
+
+            // Hover effect for the entire list item
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1); // Subtle hover effect
+            }
+
+            // Entry panel styling
+            .entry-panel {
+                display: flex;
+                align-items: center;
+                padding-left: 0.5em; // Add padding to separate from link-wrapper
+
+                .file-menu-button {
+                    @extend .icon-button;
+                    margin: -3px 0 -3px 0.4em;
+                }
+
+                .entry-details {
+                    font-size: 90%;
+                    margin-left: 4px;
+                    font-variant-numeric: tabular-nums;
+
+                    .entry-size-unit {
+                        margin-left: 0.3em;
+                    }
+                }
+            }
+
+            &>div:last-of-type {
+                clear: both;
+            }
+        }
 
         li {
             text-align: center;
@@ -614,6 +930,8 @@ form label+input { margin-top: .2em; }
             overflow-x: clip;
             padding: .5em 0 0;
 
+
+
             .link-wrapper {
                 &:not(:hover) {
                     max-height: var(--name-height);
@@ -623,15 +941,26 @@ form label+input { margin-top: .2em; }
                     -webkit-line-clamp: calc(var(--name-lines) + 1); // + icon's line
                     -webkit-box-orient: vertical;
                 }
+
                 a {
-                    &:last-of-type { padding: 0; }
-                    span { display: block; }
-                    .icon.icon { font-size: calc(1.2rem + .6rem * var(--tile-size)); }
-                    img.icon, video.icon {
+                    &:last-of-type {
+                        padding: 0;
+                    }
+
+                    span {
+                        display: block;
+                    }
+
+                    .icon.icon {
+                        font-size: calc(1.2rem + .6rem * var(--tile-size));
+                    }
+
+                    img.icon {
                         width: auto;
                         height: 1em;
                         padding: 0.1em 0;
                     }
+
                     .icon {
                         font-size: 4rem;
                         display: block;
@@ -643,26 +972,35 @@ form label+input { margin-top: .2em; }
                     overflow: visible;
                     display: block;
                     z-index: 1;
-                    .icon::before { text-decoration: none; }
+
+                    .icon::before {
+                        text-decoration: none;
+                    }
                 }
             }
+
             .link-wrapper:hover {
-                padding: 0; margin: 0;
+                padding: 0;
+                margin: 0;
             }
+
             &:nth-of-type(odd) {
-                background-color: inherit; // to avoid checkerboard effect
+                background-color: var(--bg1); // to avoid checkerboard effect
             }
+
             .entry-panel {
                 justify-content: center;
                 font-size: 10pt;
             }
+
             .entry-details {
                 font-size: 80%;
             }
-            &.page-separator {
-                margin-top: 0;
-                &::before { content: ''; }
+
+            &.page-separator::before {
+                content: '';
             }
+
             input[type=checkbox] {
                 margin: 0;
                 position: absolute;
@@ -670,141 +1008,432 @@ form label+input { margin-top: .2em; }
                 right: 1em;
             }
 
-            .link-wrapper a { display:inline } // avoid overlapping name and details
+            .link-wrapper a {
+                display: inline
+            }
+
+            // avoid overlapping name and details
             &:hover {
                 --bg: var(--ghost-contrast-alt);
                 background: var(--bg); // highlight whole tile
-                .link-wrapper, .entry-panel {
-                    z-index: 1; background: var(--bg); // cover underlying elements of other tiles, in case it's overflowing
+
+                .link-wrapper,
+                .entry-panel {
+                    z-index: 1;
+                    background: var(--bg); // cover underlying elements of other tiles, in case it's overflowing
                 }
-                input[type=checkbox] { z-index: 2; } // over link-wrapper, but not over header
+
+                input[type=checkbox] {
+                    z-index: 2;
+                }
+
+                // over link-wrapper, but not over header
                 .entry-panel {
                     padding-bottom: 0.3em;
                 }
             }
-            .entry-comment {
-                max-height: 1.2em;
-                overflow: hidden;
-                margin: 0;
-                &:hover {
-                    max-height: none;
-                    overflow: auto;
-                }
-            }
         }
+
     }
+
     .entry-size::after {
         content: none;
     }
-    .entry-ts { display: none; }
+
+    .entry-ts {
+        display: none;
+    }
+
     .popup-menu-button {
         position: absolute;
         top: 0;
         left: 0;
     }
+
     #filter-bar {
         margin-bottom: 1em;
     }
-    #paging { z-index: 1 } // avoid being covered by hovered elements
+
+    #paging {
+        z-index: 1
+    }
+
+    // avoid being covered by hovered elements
 
 }
 
 #root // heavier selector
+
 .file-show {
     &>div {
         height: 100%;
         width: 100%;
-        @media (max-width: 30em) { // portrait mobile
-            flex-direction: column-reverse !important; // bar at the bottom, easier on the thumb
-        }
     }
 
     .showing-container {
         width: 100%;
         height: 100%;
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        position: relative;
     }
-    .meta-tags {
-        position: relative;
-        width: 100%;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        &>div { position: absolute;
-            margin: 1em;
-        }
-    }
+
     .showing {
-        max-width: calc(100% - min(4vw, var(--nav-size)) * 2); // avoid overlapping of controls and nav buttons
+        max-width: calc(100% - var(--nav-size)*2); // avoid overlapping of controls and nav buttons
         max-height: 100%;
     }
-    .cover {
-        position: absolute;
-        width: 100%; height: 100%;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-        z-index: -1; // otherwise firefox (forgot to finished this comment)
-        opacity: .4;
-        transition: opacity 1s;
-        &.none { opacity: 0; }
+
+    img.showing {
+        max-width: 100%
     }
-    audio.showing { min-width: 60%; transition: opacity 1s; }
-    .cover:not(.none)+audio { opacity: .7; }
-    audio.showing, // even on mobile, we need the whole thing to control it decently, and nav-s don't seem to be a problem
-    img.showing { max-width: 100% } // we are ok with overlapping for simple images
+
+    // we are ok with overlapping for simple images
     .main {
-        flex: 1; position: relative; max-height: 100%;
+        flex: 1;
+        position: relative;
+        max-height: 100%;
         overflow: hidden; // without this <video> can make me go beyond the screen limit
     }
-    .freeY, .fullWidth {
-        .main { overflow-y: auto; }
-        .showing { max-height: initial; margin: auto; }
-        .showing-container { overflow: auto; align-items: flex-start; justify-content: flex-start; }
-    }
+
+    .freeY,
     .fullWidth {
-        .showing-container, .showing { width: 100%; }
+        .main {
+            overflow-y: auto;
+        }
+
+        .showing {
+            max-height: initial;
+            margin: auto;
+        }
+
+        .showing-container {
+            overflow: auto;
+            align-items: flex-start;
+        }
     }
-    --nav-size: 25vh; // big
-    @supports (width: min(1px,2px)) {
-        --nav-size: min(25vh, 25vw, 13em);
+
+    .fullWidth {
+
+        .showing-container,
+        .showing {
+            width: 100%;
+        }
     }
+
+    --nav-size: min(25vh, 25vw);
+
     .nav {
         position: absolute;
-        width: .5em; // closer to the edge
-        font-size: var(--nav-size);
+        margin: -.4em; // closer to the edge
+        font-size: var(--nav-size); // big
         cursor: pointer;
         opacity: .3;
         -webkit-text-stroke: 2px black;
         user-select: none;
         transition: opacity .3s;
-        &:hover { opacity: .7; }
-        &.nav-hidden:not(:hover) { opacity: 0 }
-    }
-    .bar {
-        padding: .5em min(2vw, 1em);
-        background: var(--bg);
-        opacity: .8;
-        flex-wrap: wrap;
-        &,&>.controls {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: .5em;
+
+        &:hover {
+            opacity: .7;
         }
 
-        .entry-details { font-size: smaller; margin-left: 1em; }
-        .entry-ts { display: inherit; font-size: smaller; }
-        .entry-size::after { display: none }
+        &.nav-hidden {
+            opacity: 0
+        }
+    }
+
+    .bar {
+        padding: .5em 1em;
+        background: var(--bg1);
+        opacity: .8;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: .5em 1.5em;
+
+        .entry-details {
+            font-size: smaller;
+        }
+
+        .entry-ts {
+            display: inherit;
+        }
+
+        .entry-size::after {
+            display: none
+        }
     }
 }
+
 .file-show-help {
-    kbd { margin: .5em }
-    kbd:first-of-type { margin-top: 1em; }
+    kbd {
+        margin: .5em
+    }
+
+    kbd:first-of-type {
+        margin-top: 1em;
+    }
+}
+
+#main-footer {
+    @extend .hide-back;
+    top: 0;
+    padding: 1em 1.5em; // Increased padding for better spacing
+    z-index: 3; // Necessary to not be covered by checkboxes
+    background-color: rgba(255, 255, 255, 0.1); // Semi-transparent white background
+    backdrop-filter: blur(8px); // Adds a frosted glass effect
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); // Increased shadow for more elevation
+    border-radius: 12px; // Rounded edges
+    margin: 1em; // Add margin to prevent the header from touching the edges
+    border: 1px solid rgba(255, 255, 255, 0.1); // Optional: subtle border for separation
+
+}
+
+.footer-content {
+    display: grid;
+    /* Add spacing between columns */
+    max-width: 1200px;
+    /* Limit width for better readability */
+    margin: 0 auto;
+    /* Center the content */
+}
+
+.website-name h2 {
+    margin: 0.5em;
+}
+
+.website-column {
+    display: grid;
+    grid-template-columns: 2fr 1px 1fr;
+    /* 2:1 ratio with a 1px separator */
+    align-items: start;
+    /* Align items to the top */
+    max-width: 1200px;
+    /* Limit width for better readability */
+    margin: 0 auto;
+    /* Center the content */
+    gap: 2em;
+}
+
+.logo-detailes {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    /* Add spacing between logo and links */
+}
+
+.footer-logo {
+    height: 160px;
+    /* Adjust logo size */
+    width: auto;
+    /* Maintain aspect ratio */
+}
+
+.website-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--good-contrast);
+    /* Use a contrast color variable */
+}
+
+.links-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    /* Add spacing between sections */
+}
+
+.find-us {
+    display: flex;
+    flex-direction: row;
+    /* gap: 0.7em; */
+}
+
+.links-contact h3 {
+    font-size: 1.2em;
+    margin: 0 0.5em;
+    color: var(--good-contrast);
+    /* Use a contrast color variable */
+}
+
+.social-links,
+.contact-info {
+    list-style: none;
+    /* Remove default list styling */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 0.5em;
+    /* Add spacing between items */
+}
+
+.social-links a,
+.contact-info a {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    /* Add spacing between icon and text */
+    color: inherit;
+    /* Inherit text color */
+    text-decoration: none;
+    /* Remove default underline */
+}
+
+.social-links a:hover,
+.contact-info a:hover {
+    opacity: 0.8;
+    /* Slightly fade on hover */
+}
+
+.social-links .icon,
+.contact-info .icon {
+    font-size: 1.5em;
+    /* Slightly larger icons */
+}
+
+.separator {
+    width: 1px;
+    /* Separator width */
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Light separator color */
+    height: 100%;
+    /* Full height separator */
+}
+
+.maintainer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    text-align: center;
+    /* Add spacing between elements */
+}
+
+.maintainer-column h3,
+p {
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+    color: var(--good-contrast);
+    /* Use a contrast color variable */
+    margin: 0;
+}
+
+
+.maintainer-links {
+    list-style: none;
+    /* Remove default list styling */
+    padding: 0;
+    margin: 0;
+}
+
+
+.maintainer-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    /* Add spacing between icon and text */
+    color: inherit;
+    /* Inherit text color */
+    text-decoration: none;
+    /* Remove default underline */
+    margin-bottom: 0.5em;
+    /* Add spacing between items */
+}
+
+.maintainer-links a:hover {
+    text-decoration: underline;
+    /* Add underline on hover */
+}
+
+
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 2em;
+    /* Add spacing above the copyright notice */
+    padding-top: 1em;
+    /* Add padding above the copyright notice */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    /* Subtle border */
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 0.9em;
+    opacity: 0.8;
+    /* Slightly faded text */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        /* Stack columns vertically on smaller screens */
+    }
+
+    .links-contact {
+        grid-template-columns: 1fr;
+        /* Stack social links and contact info vertically */
+    }
+
+    .logo-detailes {
+        flex-direction: column;
+        /* Stack logo and name vertically */
+        align-items: flex-start;
+        /* Align to the left */
+    }
+
+    .footer-logo {
+        height: 140px;
+        /* Slightly smaller logo for mobile */
+    }
+
+    .website-name {
+        font-size: 1.3em;
+        /* Slightly smaller font size for mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-logo {
+        height: 120pxpx;
+        /* Even smaller logo for very small screens */
+    }
+
+    .website-name {
+        font-size: 1em;
+        text-align: center;
+        /* Smaller font size for very small screens */
+    }
+
+    .logo-detailes {
+        align-items: center;
+        /* Align to the left */
+    }
+
+    .website-column {
+        grid-template-columns: 1fr;
+        gap: 0.5em;
+        align-items: center;
+    }
+
+    .links-contact {
+        gap: 0;
+    }
+
+    .maintainer-column h3 {
+        font-size: 1em;
+        /* Smaller heading size for very small screens */
+    }
+
+    .maintainer-links a {
+        font-size: 0.9em;
+        /* Smaller font size for links */
+    }
+
+    .footer-bottom {
+        margin: 0;
+    }
 }
 
 @media (min-width: 42em) {
@@ -817,36 +1446,58 @@ form label+input { margin-top: .2em; }
         &::-webkit-scrollbar {
             width: 12px;
         }
+
         &::-webkit-scrollbar-track {
             background: var(--ghost-contrast);
         }
+
         &::-webkit-scrollbar-thumb {
             background-color: var(--button-bg);
             border-radius: 20px;
             border: 1px solid var(--ghost-contrast)
         }
     }
-    button { padding: .5em 1em; }
 }
+
 @media (max-width: 42em) {
-    :root { --ghost-contrast: #8883; } /* phones have different curve */
-    body, button, select { font-size: 14pt; }
-    #menu-bar, #filter-bar, #clipBar {
-        button .icon + .label { display: none } /* icons only */
+    :root {
+        --ghost-contrast: #8883;
     }
+
+    /* phones have different curve */
+    body,
+    button,
+    select {
+        font-size: 14pt;
+    }
+
+    #menu-bar,
+    #filter-bar {
+        button label {
+            display: none
+        }
+
+        /* icons only */
+    }
+
     #filter-bar {
         margin-top: 0.4em;
-        button { // make it same size of top bar
+
+        button {
+            // make it same size of top bar
             width: 17.6vw;
             height: 2.3em;
         }
     }
+
     .breadcrumb {
         word-break: break-all; // solves with very long names without spaces. 'break-word' is nicer but doesn't handle worst cases like /gear/mininova/x/LOOPMASTERS%204Gig%20Pack/LOOPMASTERS_2015/BASS_HOUSE_AND_GARAGE_2_DEMOS/SOUNDS_AND_FX/
+
         .icon {
-            font-size:24px;
+            font-size: 24px;
         }
     }
+
     #root>.tiles-mode {
         margin: 0;
     }
@@ -858,7 +1509,9 @@ form label+input { margin-top: .2em; }
             display: flex;
             gap: 3em;
             margin: 1em;
-            .file-menu { // move divisor to left
+
+            .file-menu {
+                // move divisor to left
                 margin-top: 0;
                 padding-top: 0;
                 border-top: none;
@@ -871,5 +1524,9 @@ form label+input { margin-top: .2em; }
 }
 
 @media (pointer: coarse) {
-    #root>.tiles-mode .file-menu-button { font-size: 1em; margin-top: 0.3em; } // easier to tap
+    #root>.tiles-mode .file-menu-button {
+        font-size: 1em;
+        margin-top: 0.3em;
+    }
+
 }
